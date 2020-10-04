@@ -1,8 +1,8 @@
 import { MongoClient } from 'mongodb'
 
-import { Database } from '../lib/types'
+import { Database, User, Listing, Booking } from '../lib/types'
 
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/<dbname>?retryWrites=true&w=majority`
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net`
 
 export const connectDatabase = async (): Promise<Database> => {
   const client = await MongoClient.connect(url, {
@@ -15,6 +15,8 @@ export const connectDatabase = async (): Promise<Database> => {
   console.log('Connected to Mongo')
 
   return {
-    listings: db.collection('test_listings'),
+    bookings: db.collection<Booking>('bookings'),
+    listings: db.collection<Listing>('listings'),
+    users: db.collection<User>('users'),
   }
 }
