@@ -1,4 +1,12 @@
-import { ObjectId, Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
+
+export interface Viewer {
+  _id?: string
+  token?: string
+  avatar?: string
+  walletId?: string
+  didRequest: boolean
+}
 
 export enum ListingType {
   Apartment = 'APARTMENT',
@@ -11,10 +19,6 @@ export interface BookingsIndexMonth {
 
 export interface BookingsIndexYear {
   [key: string]: BookingsIndexMonth
-}
-
-export interface BookingsIndex {
-  [key: string]: BookingsIndexYear
 }
 
 export interface Booking {
@@ -37,7 +41,7 @@ export interface Listing {
   admin: string
   city: string
   bookings: ObjectId[]
-  bookingsIndex: BookingsIndex
+  bookingsIndex: BookingsIndexYear
   price: number
   numOfGuests: number
 }
